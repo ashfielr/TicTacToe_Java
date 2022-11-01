@@ -11,8 +11,10 @@ public class TicTacToeGame {
 		while(gameRunning) {
 			showGrid();
 			takeTurn('X');
+			checkGameWon();
 			showGrid();
 			takeTurn('O');
+			checkGameWon();
 		}
 	}
 	
@@ -60,6 +62,35 @@ public class TicTacToeGame {
 			System.out.println(e);
 		}
 
+	}
+	
+	// will display which player won if game is over, otherwise nothing is printed
+	private static void checkGameWon() {
+		char winningChar = ' ';
+		
+		for (int i=0; i<grid.length; i++) {
+			// check winning rows and then columns
+			if(grid[i][0] == grid[i][1] && grid[i][1] == grid[i][2]) {
+				winningChar = grid[i][0];
+				break;
+			} else if (grid[0][i] == grid[1][i] && grid[1][i] == grid[2][i]) {
+				winningChar = grid[0][i];
+				break;
+			}
+			// check diagonals
+			if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]){
+				winningChar = grid[0][0];
+				break;
+			} else if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0]) {
+				winningChar =  grid[0][2];
+				break;
+			}
+		}
+
+		if (winningChar != ' ') {
+			System.out.println(winningChar + " won the game!");
+			System.exit(winningChar);
+		}
 	}
 
 }
