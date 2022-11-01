@@ -4,16 +4,21 @@ public class TicTacToeGame {
 
 	private static char[][] grid;
 	private static Scanner scan = new Scanner(System.in);
+	private static byte turnCount;
 	
 	public static void main(String[] args) {
 		boolean  gameRunning = true;
+		turnCount = 0;
 		setupGrid();
+		showGrid();
 		while(gameRunning) {
-			showGrid();
+			
 			takeTurn('X');
-			checkGameWon();
 			showGrid();
+			checkGameWon();
+			
 			takeTurn('O');
+			showGrid();
 			checkGameWon();
 		}
 	}
@@ -30,7 +35,10 @@ public class TicTacToeGame {
 	}
 	
 	private static void showGrid() {
+		System.out.println();
+		System.out.println("     0     1     2  ");
 		for(int row=0; row<grid.length; row++) {
+			System.out.print(row + " ");
 			for(int col=0; col<grid[row].length; col++) {
 				System.out.print(" | " + grid[row][col] + " |");
 			}
@@ -42,13 +50,13 @@ public class TicTacToeGame {
 		boolean cellNotSelected = true;
 		try {
 			while (cellNotSelected) {
-				System.out.println("Enter row (0,1, or 2): ");
-				byte row = scan.nextByte();
-				System.out.println(row);
 				System.out.println("Enter column (0,1, or 2): ");
 				byte col = scan.nextByte();
 				System.out.println(col);
-				System.out.println("(" + row + "," + col + ")");
+				System.out.println("Enter row (0,1, or 2): ");
+				byte row = scan.nextByte();
+				System.out.println(row);
+				//System.out.println("(" + col + "," + row + ")");
 				
 				if (grid[row][col] == ' ') {
 					grid[row][col] = c;
@@ -57,6 +65,7 @@ public class TicTacToeGame {
 					System.out.println("That cell is already used...");
 				}
 			}
+			turnCount++;
 		}
 		catch (Exception e) {
 			System.out.println(e);
@@ -67,7 +76,6 @@ public class TicTacToeGame {
 	// will display which player won if game is over, otherwise nothing is printed
 	private static void checkGameWon() {
 		char winningChar = ' ';
-		
 		for (int i=0; i<grid.length; i++) {
 			// check winning rows and then columns
 			if(grid[i][0] == grid[i][1] && grid[i][1] == grid[i][2]) {
@@ -86,10 +94,19 @@ public class TicTacToeGame {
 				break;
 			}
 		}
+		
+		if(turnCount == 9) {
+			System.out.println("Game over...");
+		}
 
-		if (winningChar != ' ') {
-			System.out.println(winningChar + " won the game!");
+		if (winningChar != ' ' || turnCount == 9) {
+			System.out.println("Game over...");
+			
+		} if (winningChar != ' '){
+			System.out.println(winningChar + " WON the game!");
 			System.exit(winningChar);
+		} else {
+			System.out.println("DRAW");
 		}
 	}
 
