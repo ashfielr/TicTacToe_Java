@@ -50,12 +50,14 @@ public class TicTacToeGame {
 		boolean cellNotSelected = true;
 		try {
 			while (cellNotSelected) {
-				System.out.println("Enter column (0,1, or 2): ");
+				System.out.println();
+				System.out.println(c + " take you turn...");
+				System.out.print("Enter column (0,1, or 2): ");
 				byte col = scan.nextByte();
-				System.out.println(col);
-				System.out.println("Enter row (0,1, or 2): ");
+				//System.out.println(col);
+				System.out.print("Enter row (0,1, or 2): ");
 				byte row = scan.nextByte();
-				System.out.println(row);
+				//System.out.println(row);
 				//System.out.println("(" + col + "," + row + ")");
 				
 				if (grid[row][col] == ' ') {
@@ -69,6 +71,7 @@ public class TicTacToeGame {
 		}
 		catch (Exception e) {
 			System.out.println(e);
+			takeTurn(c);
 		}
 
 	}
@@ -95,19 +98,17 @@ public class TicTacToeGame {
 			}
 		}
 		
-		if(turnCount == 9) {
-			System.out.println("Game over...");
-		}
-
 		if (winningChar != ' ' || turnCount == 9) {
 			System.out.println("Game over...");
 			
-		} if (winningChar != ' '){
-			System.out.println(winningChar + " WON the game!");
-			System.exit(winningChar);
-		} else {
-			System.out.println("DRAW");
-		}
+			if (winningChar != ' '){
+				System.out.println(winningChar + " WON the game!");
+				System.exit(winningChar);
+			} else if(turnCount == 9){
+				System.out.println("DRAW");
+				System.exit(winningChar);
+			}
+		} 
 	}
 
 }
